@@ -4,12 +4,12 @@ import java.io.*;
 class TerminationException extends Exception {
 }
 
-public class LOA_Q {
-    GameClient client;
+public class Grossthello {
+    GthClient client;
     WorkBoard board = new WorkBoard();
     int depth;
     
-    public LOA_Q(GameClient client, int depth) {
+    public Grossthello(GthClient client, int depth) {
 	this.client = client;
 	this.depth = depth;
     }
@@ -67,13 +67,13 @@ public class LOA_Q {
 	} catch(TerminationException e) {
 	    System.out.print("Game ends with ");
 	    switch (client.winner) {
-	    case client.WHO_WHITE:
+	    case GthClient.WHO_WHITE:
 		System.out.println("white win");
 		break;
-	    case client.WHO_BLACK:
+	    case GthClient.WHO_BLACK:
 		System.out.println("black win");
 		break;
-	    case client.WHO_NONE:
+	    case GthClient.WHO_NONE:
 		System.out.println("draw");
 		break;
 	    }
@@ -87,16 +87,16 @@ public class LOA_Q {
 	       "usage: black|white hostname server-number depth");
 	int side;
 	if (args[0].equals("black"))
-	    side = GameClient.WHO_BLACK;
+	    side = GthClient.WHO_BLACK;
 	else if (args[0].equals("white"))
-	    side = GameClient.WHO_WHITE;
+	    side = GthClient.WHO_WHITE;
 	else
 	    throw new IllegalArgumentException("unknown side");
 	String host = args[1];
 	int server = Integer.parseInt(args[2]);
-	GameClient client = new GameClient(side, host, server);
+	GthClient client = new GthClient(side, host, server);
 	int depth = Integer.parseInt(args[3]);
-	LOA_Q game = new LOA_Q(client, depth);
+	Grossthello game = new Grossthello(client, depth);
 	game.play();
     }
 }
