@@ -56,15 +56,14 @@ public class WorkBoard extends Board {
 		if (to_move == saved_to_move) {
 		    maxv = INF;
 		    maxm = m;
-		}
-		else if (to_move == OBSERVER) {
+		} else if (to_move == OBSERVER) {
 		    if (maxv < 0) {
 			maxv = 0;
 			maxm = m;
 		    }
-		} else if (to_move == opponent(saved_to_move) &&
-			   maxv == -INF) {
-		    maxm = m;
+		} else if (to_move == opponent(saved_to_move)) {
+		    if (maxv == -INF)
+			maxm = m;
 		} else
 		    throw new Error("winner error");
 	    } else {
