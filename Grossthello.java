@@ -17,6 +17,11 @@ public class Grossthello {
     private void make_my_move()
       throws TerminationException {
 	board.bestMove(depth);
+	String ellipses = "... ";
+	if (board.to_move == Board.PLAYER_BLACK)
+	    ellipses = "";
+	System.out.println("me:  " + board.serial + ". " +
+			   ellipses + board.best_move.name());
 	int result = board.try_move(board.best_move);
 	if (result == board.ILLEGAL_MOVE)
 	    throw new Error("attempted illegal move");
@@ -47,6 +52,11 @@ public class Grossthello {
 	}
 	if (state == client.STATE_DONE)
 	    throw new TerminationException();
+	String ellipses = "... ";
+	if (board.to_move == Board.PLAYER_BLACK)
+	    ellipses = "";
+	System.out.println("opp: " + board.serial + ". " +
+			   ellipses + client.move.name());
 	int result = board.try_move(client.move);
 	if (result == board.ILLEGAL_MOVE)
 	    throw new Error("received apparently illegal move");
