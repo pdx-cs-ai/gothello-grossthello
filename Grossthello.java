@@ -27,11 +27,13 @@ public class LOA_Q {
 	    e.printStackTrace(System.out);
 	    throw new Error("move refused by referee");
 	}
-	if (result == board.GAME_OVER && state != client.STATE_DONE ||
-	    result == board.CONTINUE && state != client.STATE_CONTINUE)
-	    throw new Error("client and board disagree on sent move outcome");
-	if (result == board.GAME_OVER)
+	if (state == client.STATE_CONTINUE && result != board.CONTINUE)
+	    throw new Error("Client erroneously expected game over");
+	if (state == client.STATE_DONE) {
+	    if (result != board.GAME_OVER)
+		System.out.println("Game over unexpectedly");
 	    throw new TerminationException();
+	}
     }
 
     private void get_opp_move()
@@ -43,14 +45,11 @@ public class LOA_Q {
 	    e.printStackTrace(System.out);
 	    throw new Error("couldn't get move from referee");
 	}
+	if (state == client.STATE_DONE)
+	    throw new TerminationException();
 	int result = board.try_move(client.move);
 	if (result == board.ILLEGAL_MOVE)
-	    throw new Error("received illegal move");
-	if (result == board.GAME_OVER && state != client.STATE_DONE ||
-	    result == board.CONTINUE && state != client.STATE_CONTINUE)
-	    throw new Error("client and board disagree on received move outcome");
-	if (result == board.GAME_OVER)
-	    throw new TerminationException();
+	    throw new Error("received apparently illegal move");
     }
 
     public void play() {
