@@ -47,6 +47,8 @@ public class WorkBoard extends Board {
 	    Move m = (Move)moves.get(i);
 	    int capture = square[m.x2][m.y2];
 	    int saved_to_move = to_move;
+	    int saved_game_state = game_state;
+	    int saved_serial = serial;
 	    int status = try_move(m);
 	    if (status == ILLEGAL_MOVE)
 		throw new Error("unexpectedly illegal move");
@@ -71,6 +73,8 @@ public class WorkBoard extends Board {
 		}
 	    }
 	    to_move = saved_to_move;
+	    game_state = saved_game_state;
+	    serial = saved_serial;
 	    square[m.x2][m.y2] = capture;
 	    square[m.x1][m.y1] = checker_of(to_move);
 	    predecessor = predecessor.predecessor;
