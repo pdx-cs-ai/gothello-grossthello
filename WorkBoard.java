@@ -23,13 +23,38 @@ public class WorkBoard extends Board {
 	return nstones - ostones;
     }
 
-    int negamax(int depth) {
-	if (depth <= 0)
-	    return heval();
+    static java.util.Random prng = new java.util.Random();
+
+    static int randint(int n) {
+	return Math.abs(prng.nextInt()) % n;
+    }
+
+    int negamax(int depth, boolean find_move) {
 	Vector moves = genMoves();
+	int nmoves = moves.size();
+	if (nmoves == 0) {
+	    best_move = new Move();
+	    WorkBoard scratch = new WorkBoard(this);
+	    int status = scratch.try_move(best_move);
+	    if (status != GAME_OVER)
+		return -scratch.negamax(25, false);
+	    int result = scratch.referee();
+	    if (result == to_move)
+		return INF;
+	    if (result == opponent(to_move))
+		return -INF;
+	    return 0;
+	}
+	if (depth <= 0) {
+	    if (find_move)
+		throw new Error("move without search");
+	    return heval();
+	}
+	Vector values = null;
+	if (find_move)
+	    values = new Vector(nmoves);
 	int maxv = -INF;
-	Move maxm = null;
-	for (int i = 0; i < moves.size(); i++) {
+	for (int i = 0; i < nmoves; i++) {
 	    Move m = (Move)moves.get(i);
 	    /* XXX do-undo is very difficult here, since we
 	       may capture a large number of stones.  For
@@ -38,34 +63,29 @@ public class WorkBoard extends Board {
 	    int status = scratch.try_move(m);
 	    if (status == ILLEGAL_MOVE)
 		throw new Error("unexpectedly illegal move");
-	    if (status == GAME_OVER) {
-		int winner = scratch.referee();
-		if (winner == to_move) {
-		    maxv = INF;
-		    maxm = m;
-		} else if (winner == OBSERVER) {
-		    if (maxv < 0) {
-			maxv = 0;
-			maxm = m;
-		    }
-		} else if (winner == opponent(to_move)) {
-		    if (maxv == -INF)
-			maxm = m;
-		} else
-		    throw new Error("winner error");
-	    } else {
-		int v = -scratch.negamax(depth - 1);
-		if (v >= maxv) {
-		    maxv = v;
-		    maxm = m;
-		}
-	    }
+	    if (status == GAME_OVER)
+		throw new Error("unexpectedly game over");
+	    int v = -scratch.negamax(depth - 1, false);
+	    if (find_move)
+		values.add(i, new Integer(v));
+	    if (v >= maxv)
+		maxv = v;
 	}
-	best_move = maxm;
+	if (!find_move)
+	    return maxv;
+	int nbest = 0;
+	for (int i = 0; i < nmoves; i++)
+	    if (((Integer)(values.get(i))).intValue() == maxv)
+		nbest++;
+	int randmove = randint(nbest);
+	for (int i = 0; i < nmoves; i++)
+	    if (((Integer)values.get(i)).intValue() == maxv)
+		if (randmove-- == 0)
+		    best_move = (Move)moves.get(i);
 	return maxv;
     }
 
     void bestMove(int depth) {
-	int v = negamax(depth);
+	int v = negamax(depth, true);
     }
 }
