@@ -30,7 +30,7 @@ public class WorkBoard extends Board {
     }
 
     int negamax(int depth, boolean find_move) {
-	Vector moves = genMoves();
+	Vector<Move> moves = genMoves();
 	int nmoves = moves.size();
 	if (nmoves == 0) {
 	    best_move = new Move();
@@ -50,12 +50,12 @@ public class WorkBoard extends Board {
 		throw new Error("move without search");
 	    return heval();
 	}
-	Vector values = null;
+	Vector<Integer> values = null;
 	if (find_move)
-	    values = new Vector(nmoves);
+	    values = new Vector<Integer>(nmoves);
 	int maxv = -INF;
 	for (int i = 0; i < nmoves; i++) {
-	    Move m = (Move)moves.get(i);
+	    Move m = moves.get(i);
 	    /* XXX do-undo is very difficult here, since we
 	       may capture a large number of stones.  For
 	       now, just punt. */
@@ -81,7 +81,7 @@ public class WorkBoard extends Board {
 	for (int i = 0; i < nmoves; i++)
 	    if (((Integer)values.get(i)).intValue() == maxv)
 		if (randmove-- == 0)
-		    best_move = (Move)moves.get(i);
+		    best_move = moves.get(i);
 	return maxv;
     }
 
