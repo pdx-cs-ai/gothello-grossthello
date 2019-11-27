@@ -5,6 +5,10 @@ This is a simple Java AI for playing
 [Gothello](http://pdx-cs-ai.github.io/gothello-project). It
 uses depth-limited negamax search.
 
+This repo uses Git submodules to borrow pieces from
+the other repos. Say `git submodule init` and then `git
+submodule update` before you try to compile.
+
 Build with `javac Grossthello.java`. Run with for example
 
         java Grossthello white localhost 0 3
