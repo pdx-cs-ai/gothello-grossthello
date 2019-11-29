@@ -73,6 +73,11 @@ public class WorkBoard extends Board {
 	}
 	if (!find_move)
 	    return maxv;
+
+        print_board(System.err);
+        System.err.println(maxv);
+        System.err.println();
+
 	int nbest = 0;
 	for (int i = 0; i < nmoves; i++)
 	    if (((Integer)(values.get(i))).intValue() == maxv)
