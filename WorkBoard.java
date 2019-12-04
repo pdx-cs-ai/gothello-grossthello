@@ -1,6 +1,7 @@
 import java.util.Vector;
 
 public class WorkBoard extends Board {
+    public static boolean logging = false;
     static final int INF = 5 * 5 + 1;
     Move best_move = null;
 
@@ -74,9 +75,11 @@ public class WorkBoard extends Board {
 	if (!find_move)
 	    return maxv;
 
-        print_board(System.err);
-        System.err.println(maxv);
-        System.err.println();
+        if (logging) {
+            print_board(System.err);
+            System.err.println(maxv);
+            System.err.println();
+        }
 
 	int nbest = 0;
 	for (int i = 0; i < nmoves; i++)

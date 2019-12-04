@@ -92,9 +92,9 @@ public class Grossthello {
 
     public static void main(String args[])
       throws IOException {
-	if (args.length != 4)
+	if (args.length != 4 && args.length != 5)
 	    throw new IllegalArgumentException(
-	       "usage: black|white hostname server-number depth");
+	       "usage: [black|white] <hostname> <server-number> <depth> [log]");
 	int side;
 	if (args[0].equals("black"))
 	    side = GthClient.WHO_BLACK;
@@ -107,6 +107,11 @@ public class Grossthello {
 	GthClient client = new GthClient(side, host, server);
 	int depth = Integer.parseInt(args[3]);
 	Grossthello game = new Grossthello(client, depth);
+        if (args.length == 5 && args[4].equals("log")) {
+            System.err.println("logging");
+            System.err.println();
+            WorkBoard.logging = true;
+        }
 	game.play();
     }
 }
