@@ -5,9 +5,9 @@ This is a simple Java AI for playing
 [Gothello](http://pdx-cs-ai.github.io/gothello-project). It
 uses depth-limited negamax search.
 
-This repo uses Git submodules to borrow pieces from
-the other repos. Say `git submodule init` and then `git
-submodule update` before you try to compile.
+This repo uses Git submodules to borrow pieces from the
+other repos. Say `git submodule update --init` before you
+try to compile.
 
 Build with `javac Grossthello.java`. Run with for example
 
@@ -17,4 +17,5 @@ where `white` is the side to play, `localhost` is the
 machine on which the game server
 [gthd](http://pdx-cs-ai.github.com/gothello-gthd) is
 running, 0 is the "server number" on that server, and
-3 is the negamax search depth.
+3 is the negamax search depth. You can add `log` at the end
+of the command to have the player log scores to `stderr`.
