@@ -1,1 +1,0 @@
-gothello-gthd/Gthd.java
