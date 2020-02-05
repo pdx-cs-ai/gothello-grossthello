@@ -9,6 +9,13 @@ This repo uses Git submodules to borrow pieces from the
 other repos. Say `git submodule update --init` before you
 try to compile.
 
+To compile and run this, you will have to set your Java
+`CLASSPATH`. On Linux
+
+        export CLASSPATH=`pwd`:`pwd`/libclient:`pwd`/gthd
+
+I don't know how this works on Windows.
+
 Build with `javac Grossthello.java`. Run with for example
 
         java Grossthello white localhost 0 3

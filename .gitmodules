@@ -1,0 +1,6 @@
+[submodule "libclient"]
+	path = libclient
+	url = http://github.com/pdx-cs-ai/gothello-libclient-java
+[submodule "gthd"]
+	path = gthd
+	url = http://github.com/pdx-cs-ai/gothello-gthd
