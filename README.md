@@ -14,7 +14,14 @@ To compile and run this, you will have to set your Java
 
         export CLASSPATH=`pwd`:`pwd`/libclient:`pwd`/gthd
 
-I don't know how this works on Windows.
+On Windows you need to delete the following duplicate java files to compile
+after cloning this repo.
+
+```
+libclient/Move.java
+libclient/javadoc/Move.java
+libclient/javadoc/GthClient.java
+```
 
 Build with `javac Grossthello.java`. Run with for example
 
